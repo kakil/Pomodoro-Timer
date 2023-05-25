@@ -46,7 +46,7 @@ struct ContentView: View {
             VStack (spacing: 30){
                 Text("Pomodoro Timer")
                     .font(.system(size: 90))
-                Text("By Mammoth Interactive")
+                Text("By AkilDev LLC")
                     .font(.system(size: 45))
                 Text(String(convertSecondsToTime(seconds: timeToShow)))
                     .font(.system(size: 80))
