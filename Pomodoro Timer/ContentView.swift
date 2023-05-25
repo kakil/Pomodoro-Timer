@@ -57,9 +57,9 @@ struct ContentView: View {
                 ZStack {
                     Circle()
                         .foregroundColor(Color.blue)
-                        .frame(width: 100, height: 100)
+                        .frame(width: 120, height: 120)
                     Image(systemName: isPaused ? "play.fill" : "pause.fill" )
-                        .font(.system(size: 40))
+                        .font(.system(size: 60))
                         .fontWeight(.bold)
                         .foregroundColor(.white)
                             
