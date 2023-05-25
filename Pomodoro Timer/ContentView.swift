@@ -13,6 +13,7 @@ struct ContentView: View {
     @State var workTimeRemaining = 1500
     @State var breakTimeRemaining = 300
     @State var timeToWork = true
+    @State var isPaused = true
     
     let workPeriodLength = 1500
     let breakPeriodLength = 300
@@ -53,31 +54,45 @@ struct ContentView: View {
                 Text(timerText)
                     .font(.system(size: 60))
                     .padding()
+                ZStack {
+                    Circle()
+                        .foregroundColor(Color.blue)
+                        .frame(width: 100, height: 100)
+                    Image(systemName: isPaused ? "play.fill" : "pause.fill" )
+                        .font(.system(size: 40))
+                        .fontWeight(.bold)
+                        .foregroundColor(.white)
+                            
+                }
+                .onTapGesture {
+                    isPaused.toggle()
+                }
                     
             }
             .padding()
             .foregroundColor(textColor)
             .onReceive(timer, perform: { _ in
-                
-                if (timeToWork) {
-                    
-                    if (workTimeRemaining >= 0) {
-                        timeToShow = workTimeRemaining
-                        workTimeRemaining -= 1
-                    } else {
-                        timeToWork = false
-                        workTimeRemaining = workPeriodLength
-                    }
-                    
-                } else {
-                    
-                    if (breakTimeRemaining >= 0) {
-                        timeToShow = breakTimeRemaining
-                        breakTimeRemaining -= 1
-                    } else {
-                        timeToWork = true
-                        breakTimeRemaining = breakPeriodLength
+                if !isPaused {
+                    if (timeToWork) {
                         
+                        if (workTimeRemaining >= 0) {
+                            timeToShow = workTimeRemaining
+                            workTimeRemaining -= 1
+                        } else {
+                            timeToWork = false
+                            workTimeRemaining = workPeriodLength
+                        }
+                        
+                    } else {
+                        
+                        if (breakTimeRemaining >= 0) {
+                            timeToShow = breakTimeRemaining
+                            breakTimeRemaining -= 1
+                        } else {
+                            timeToWork = true
+                            breakTimeRemaining = breakPeriodLength
+                            
+                        }
                     }
                 }
                 
