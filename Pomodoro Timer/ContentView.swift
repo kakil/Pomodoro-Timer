@@ -10,12 +10,12 @@ import SwiftUI
 struct ContentView: View {
     
     @State var timeToShow = 0
-    @State var workTimeRemaining = 5
-    @State var breakTimeRemaining = 3
+    @State var workTimeRemaining = 1500
+    @State var breakTimeRemaining = 300
     @State var timeToWork = true
     
-    let workPeriodLength = 5
-    let breakPeriodLength = 3
+    let workPeriodLength = 1500
+    let breakPeriodLength = 300
     
     
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
