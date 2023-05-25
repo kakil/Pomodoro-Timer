@@ -8,13 +8,81 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State var timeToShow = 0
+    @State var workTimeRemaining = 5
+    @State var breakTimeRemaining = 3
+    @State var timeToWork = true
+    
+    let workPeriodLength = 5
+    let breakPeriodLength = 3
+    
+    
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    
+    func convertSecondsToTime(seconds: Int) -> String {
+       
+        let minutes = seconds / 60
+        
+        let secondsRemaining = seconds % 60
+        return String(format: "%02i:%02i", minutes, secondsRemaining)
+    }
+    
+    var backgroundColor: Color {
+        return timeToWork ? Color.black : Color.white
+    }
+    
+    var textColor: Color {
+        return timeToWork ? Color.white : Color.black
+    }
+    
+    var timerText: String {
+        return timeToWork ? "Time To Work!" : "Break Time!"
+    }
+    
     var body: some View {
-        VStack {
-            Text("Hello, world!")
+        ZStack {
+            backgroundColor.ignoresSafeArea()
+            VStack (spacing: 30){
+                Text("Pomodoro Timer")
+                    .font(.system(size: 90))
+                Text("By Mammoth Interactive")
+                    .font(.system(size: 45))
+                Text(String(convertSecondsToTime(seconds: timeToShow)))
+                    .font(.system(size: 80))
+                Text(timerText)
+                    .font(.system(size: 60))
+                    .padding()
+                    
+            }
+            .padding()
+            .foregroundColor(textColor)
+            .onReceive(timer, perform: { _ in
+                
+                if (timeToWork) {
+                    
+                    if (workTimeRemaining >= 0) {
+                        timeToShow = workTimeRemaining
+                        workTimeRemaining -= 1
+                    } else {
+                        timeToWork = false
+                        workTimeRemaining = workPeriodLength
+                    }
+                    
+                } else {
+                    
+                    if (breakTimeRemaining >= 0) {
+                        timeToShow = breakTimeRemaining
+                        breakTimeRemaining -= 1
+                    } else {
+                        timeToWork = true
+                        breakTimeRemaining = breakPeriodLength
+                        
+                    }
+                }
+                
+            })
         }
-        .padding()
-        .font(.system(size: 80))
-        .fontWeight(.bold)
     }
 }
 
